@@ -7,9 +7,11 @@ As the R-Car is an embedded SoC, it requires a custom OS and Kernel build with Y
 
     sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm python-crypto cpio python python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping libssl-dev
 
-Further, copy the *rcar_base* directory to place of your choice (or extract the zip). This directory contains all files necessary for a Yocto R-Car image. All following instructions will assume you are inside the *rcar_base*-directory. For starting the build, just run the *build.sh*-script and get some coffe.
+Further, clone this repository to place of your choice (or extract the zip). This repository contains all files necessary for a Yocto R-Car image. All following instructions will assume you are inside the *rcar_base*-directory. For starting the build, just run the *build.sh*-script and get some coffe.
 
-    ./build.sh
+    git clone https://github.com/MaxMalinowski/Embedded-OpenStack.git
+    cd Embedded-OpenStack/rcar_base
+    ./rcar_base_build.sh
 
 ### Kernel modification
 If for some reason you wish to modify the futur kernel configuration you can do this also with Yocto. For that you should have executed the build script at least once, so that the /h3ulcb-directory is present. 
