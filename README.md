@@ -30,7 +30,7 @@ Save and copy the configuration file, run the *build.sh*-script and get more cof
 ## SD-Card Preparation
 Not all Yocto output are relevant. Copy the folling files to a separate directory, here denoted by *sources*.
  
-    export SOURCES="~/Desktop/outputs"
+    export SOURCES=~/outputs
     mkdir $SOURCES 
 
     cp h3ulcb/build/tmp/deploy/images/h3ulcb/Image $SOURCES
@@ -41,15 +41,16 @@ Not all Yocto output are relevant. Copy the folling files to a separate director
 
 Depending on your build machine, if you don't have access to a USB or sd-card port, you have to copy (e.g. via scp) the just created and filled directory onto a different machine befor proceding.
 
-After having access to the SD-Card, you first have to find out the card's name. The *dmesg*-command should show the insertion of a device called sda, sdb, sdc, ... . Using two environmental variables, the SD-Card can be followingly flashed.
+After having access to the SD-Card, you first have to find out the card's name. The *dmesg*-command should show the insertion of a device called sda, sdb, sdc, ... . Using two environmental variables, the SD-Card can be followingly flashed. Execute all commands as root.
 
+    sudo -i
     export CARD="sda"             # name of your sd-card discoverd with dmesg
-    export SOURCES="~/outputs"    # directory containing all copied files
+    export SOURCES=/home/pi/outputs    # directory containing all copied files
 
 First we'll have to format the card and second partition the card. Using the interactive utility fdisk, the following inputs will take place in an interactive shell.
 
-    sudo mkfs.ext4 /dev/${CARD}
-    sudo fdisk /dev/${CARD} 
+    mkfs.ext4 /dev/${CARD}
+    fdisk /dev/${CARD} 
         -> n
         -> p
         -> 1
@@ -60,7 +61,7 @@ First we'll have to format the card and second partition the card. Using the int
         -> 2
         -> 'enter'
         -> 'enter'
-        -> 'Y'
+        (-> 'Y')
         -> w
 
 Third the new partitions have to be formated and all files can be copied and extracted onto the SD-Card.
@@ -97,7 +98,7 @@ After a successfull boot, login as root. First you have to set a timezone and th
 
 Afterwards, load all kernel modules and mount the Ubuntu-partition as well as other stuff.
 
-    cd /lib/modules/5.4.0-yocto-preempt-rt/
+    cd /lib/modules/5.4.0-yocto-standard/
     depmod -a
     cd /
     mount /dev/mmcblk1p2 /mnt
